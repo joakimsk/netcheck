@@ -1,0 +1,12 @@
+# Compiled source
+##################
+netcheck
+*.o
+*.exe
+
+
+# OS Generated
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db

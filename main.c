@@ -1,5 +1,5 @@
-/*	Netcheck
- *	Needs libcurl
+/*  Netcheck
+ *  Needs libcurl
 */
 
 #include <stdio.h>
@@ -47,8 +47,8 @@ void join_threads(pthread_t *th1){
 }
 
 int main(int argc, char *argv[]){
+    int online = 0;
     int netcheck_running = 0;
-    int sphinx_running = 0;
     struct sigaction sigIntHandler;
     sigIntHandler.sa_handler = termination_handler;
     sigemptyset(&sigIntHandler.sa_mask);
@@ -72,8 +72,14 @@ int main(int argc, char *argv[]){
                 return 2;
             }
         }
-        sleep(5);
-        debug("main: netcheck_get_network_status()=%d\n", netcheck_get_network_status());
+        sleep(1);
+        //debug("%d\n", netcheck_get_network_status());
+        online = netcheck_get_network_status();
+        if (online == 2){
+            printf("online\n");
+        } else {
+            printf("offline\n");
+        }
     }
     
     join_threads(&th1);

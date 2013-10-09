@@ -28,8 +28,6 @@ size_t dummy_write(void *ptr, size_t size, size_t nmemb, struct string *s)
     return size*nmemb;
 }
 
-/* Public */
-
 int netcheck_get_network_status(){
     return network_status;
 }
@@ -78,7 +76,7 @@ void* netcheck_thread(void *arg){
 
                     char *location_str;
                     if(strstr(s.ptr, "Location:") == NULL){
-                        printf("netcheck: Location-tag not found\n");
+                        //printf("netcheck: Location-tag not found\n");
                     } else {
                         location_str = strstr(s.ptr, "Location:");
                         if (strncmp(location_str, "Location: http://www.google.com", 31) == 0){
@@ -94,14 +92,12 @@ void* netcheck_thread(void *arg){
                 free(s.ptr);
                 curl_easy_cleanup(curl);
         } else {
-			printf("netcheck: CURL died, terminate the ship!");
-			thread_terminate = 1;
-		}
+            printf("netcheck: CURL died, terminate the ship!");
+            thread_terminate = 1;
+        }
         sleep(1);
     }
 	debug("netcheck terminated\n");
 	thread_status = 0;
     return NULL;
 }
-
-/* Private */
